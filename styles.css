@@ -1,0 +1,167 @@
+/* Base Styles */
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: #000;
+    color: white;
+    overflow: hidden;
+    margin: 0;
+}
+
+h1, h2, h3, .serif {
+    font-family: 'Playfair Display', serif;
+}
+
+/* --- Animations --- */
+@keyframes float {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-10px); }
+}
+
+@keyframes spin-slow {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+@keyframes shimmer {
+    100% { transform: translateX(100%) skewX(12deg); }
+}
+
+@keyframes subtleZoom {
+    0% { transform: scale(1); }
+    100% { transform: scale(1.15); }
+}
+
+@keyframes rain {
+    0% { transform: translateY(0); opacity: 0; }
+    20% { opacity: 1; }
+    90% { opacity: 1; }
+    100% { transform: translateY(60px); opacity: 0; }
+}
+
+@keyframes pulse-glow {
+    0%, 100% { box-shadow: 0 0 40px rgba(245,158,11,0.4); }
+    50% { box-shadow: 0 0 70px rgba(245,158,11,0.8); }
+}
+
+@keyframes flame {
+    0% { transform: scale(1, 1); opacity: 0.8; }
+    20% { transform: scale(0.9, 1.1) translate(0, -2px); opacity: 1; }
+    40% { transform: scale(1.1, 0.9) translate(1px, -1px); opacity: 0.9; }
+    60% { transform: scale(0.95, 1.05) translate(-1px, -3px); opacity: 1; }
+    80% { transform: scale(1.05, 0.95) translate(0, -1px); opacity: 0.8; }
+    100% { transform: scale(1, 1); opacity: 0.8; }
+}
+
+@keyframes flicker {
+    0% { opacity: 0.9; }
+    25% { opacity: 0.8; }
+    50% { opacity: 1; }
+    75% { opacity: 0.85; }
+    100% { opacity: 0.95; }
+}
+
+.animate-float { animation: float 6s ease-in-out infinite; }
+.animate-spin-slow { animation: spin-slow 12s linear infinite; }
+.animate-shimmer { animation: shimmer 2s infinite; }
+.animate-rain { animation: rain 1.5s ease-in infinite; }
+
+.text-glow { text-shadow: 0 0 20px rgba(255,255,255,0.4); }
+.box-glow { box-shadow: 0 0 30px rgba(255, 255, 255, 0.2), inset 0 0 20px rgba(255, 255, 255, 0.1); }
+
+/* --- Realistic Flame --- */
+.flame-container {
+    position: absolute;
+    width: 30px;
+    height: 40px;
+    bottom: 43%;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 5;
+    pointer-events: none;
+    filter: blur(1px);
+}
+
+.flame-layer {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100%;
+    height: 100%;
+    border-radius: 50% 50% 20% 20% / 60% 60% 40% 40%;
+    animation: flame 2s ease-in-out infinite, flicker 0.1s infinite alternate;
+}
+
+.flame-outer {
+    background: radial-gradient(ellipse at bottom, rgba(255, 68, 0, 0.8) 0%, rgba(255, 102, 0, 0.4) 60%, transparent 100%);
+    width: 28px;
+    height: 38px;
+    z-index: 10;
+}
+
+.flame-inner {
+    background: radial-gradient(ellipse at bottom, rgba(255, 204, 0, 1) 0%, rgba(255, 136, 0, 0.6) 50%, transparent 100%);
+    width: 18px;
+    height: 25px;
+    z-index: 15;
+    animation-delay: -0.5s;
+}
+
+.flame-core {
+    background: radial-gradient(ellipse at bottom, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 153, 0.8) 40%, transparent 100%);
+    width: 10px;
+    height: 15px;
+    z-index: 20;
+    animation-delay: -1s;
+}
+
+/* Glass UI Components */
+.glass-panel {
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.8);
+}
+
+.glass-button {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.glass-button:hover {
+    background: #d97706; /* amber-600 */
+    transform: translateY(-2px);
+}
+
+.glass-button:active {
+    transform: scale(0.95);
+}
+
+/* Controls */
+#controls-area {
+    opacity: 0;
+    transform: translateY(-10px);
+    transition: all 0.3s ease;
+}
+
+#main-container:hover #controls-area {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Admin Styles */
+.admin-input {
+    background: rgba(2, 6, 23, 0.5); /* slate-950/50 */
+    border: 1px solid rgba(51, 65, 85, 1); /* slate-700 */
+    border-radius: 0.5rem;
+    padding: 0.5rem;
+    font-size: 0.875rem;
+    color: white;
+    outline: none;
+    transition: border-color 0.2s;
+}
+
+.admin-input:focus {
+    border-color: #f59e0b; /* amber-500 */
+}
