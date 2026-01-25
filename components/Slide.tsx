@@ -14,7 +14,7 @@ const Slide: React.FC<Props> = ({ data }) => {
       {/* Background Image with Overlay */}
       <div className="absolute inset-0">
         <img 
-          src={data.imageUrl} 
+          src={data.backgroundImageUrl || data.imageUrl} 
           alt={data.title || 'Brand Background'} 
           className={`w-full h-full object-cover transition-transform duration-[30000ms] ease-linear transform scale-100 ${isLogoSlide ? 'opacity-30 blur-sm' : 'opacity-100'}`} 
           style={{ animation: 'subtleZoom 35s linear infinite alternate' }}

@@ -6,7 +6,9 @@ export interface SlideData {
   price?: string;
   imageUrl: string; // Using picsum for placeholders if actual images missing
   highlightColor?: string;
-  type: 'promo' | 'weather';
+  type: 'promo' | 'weather' | 'image-only';
+  backgroundImageUrl?: string; // Custom background image from back-images folder
+  descriptionImageUrl?: string; // Image to show in description box from front-images folder
 }
 
 export interface WeatherForecast {
