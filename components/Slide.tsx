@@ -56,15 +56,15 @@ const Slide: React.FC<Props> = ({ data }) => {
         }
       `}</style>
 
-      {/* Content Container */}
-      <div className="relative z-10 w-full h-full flex flex-col justify-center items-center p-8 md:p-16 max-w-[90%] mx-auto text-center space-y-12">
+      {/* Content Container - Optimized for TV with 25% margins */}
+      <div className="relative z-10 w-full h-full flex flex-col justify-center items-center p-[25%] mx-auto text-center space-y-12 overflow-hidden">
         
         {isLogoSlide ? (
           <div className="animate-pop-in flex flex-col items-center">
             {/* Logo Final Layer */}
-            <div className="relative group w-auto h-[70vh]">
+            <div className="relative group w-auto h-full max-h-[80%] flex items-center justify-center">
                {/* Ambient Back Glow */}
-               <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[80%] h-[80%] bg-amber-500/10 blur-[100px] rounded-full"></div>
+               <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full bg-amber-500/10 blur-[100px] rounded-full"></div>
                
                <img 
                  src={data.imageUrl}
@@ -102,7 +102,7 @@ const Slide: React.FC<Props> = ({ data }) => {
             </div>
 
             {data.day === 'Welcome' && data.title && (
-               <h1 className="mt-8 text-5xl font-serif font-black text-white text-glow">
+               <h1 className="mt-12 text-7xl font-serif font-black text-white text-glow">
                  {data.title}
                </h1>
             )}
@@ -110,15 +110,15 @@ const Slide: React.FC<Props> = ({ data }) => {
         ) : (
           <>
             {/* Day Tag */}
-            <div className="animate-slide-down">
+             <div className="animate-slide-down">
                 <span 
-                  className="px-10 py-4 rounded-full text-4xl font-black uppercase tracking-[0.2em] border-2 border-white/40 backdrop-blur-xl shadow-[0_0_30px_rgba(255,255,255,0.3)]"
+                  className="px-14 py-6 rounded-full text-5xl font-black uppercase tracking-[0.2em] border-2 border-white/40 backdrop-blur-xl shadow-[0_0_40px_rgba(255,255,255,0.3)]"
                   style={{ 
                     backgroundColor: `${data.highlightColor}40`,
                     borderColor: data.highlightColor,
                     color: '#fff',
                     textShadow: '0 2px 10px rgba(0,0,0,0.5)',
-                    boxShadow: `0 0 30px ${data.highlightColor}60`
+                    boxShadow: `0 0 40px ${data.highlightColor}60`
                   }}
                 >
                   {data.day || 'Special Event'}
@@ -126,14 +126,14 @@ const Slide: React.FC<Props> = ({ data }) => {
             </div>
 
             {/* Main Text Content */}
-            <div className="flex flex-col items-center space-y-8 animate-fade-in-up">
-              <h1 className="text-6xl md:text-8xl font-serif font-black leading-none text-white drop-shadow-[0_5px_15px_rgba(0,0,0,0.8)] text-glow tracking-wide">
+            <div className="flex flex-col items-center space-y-12 animate-fade-in-up">
+              <h1 className="text-8xl md:text-9xl font-serif font-black leading-none text-white drop-shadow-[0_8px_20px_rgba(0,0,0,0.8)] text-glow tracking-wide">
                 {data.title}
               </h1>
               
-              <div className="h-2 w-48 rounded-full shadow-[0_0_20px_rgba(245,158,11,0.8)]" style={{ backgroundColor: data.highlightColor || '#f59e0b' }}></div>
+              <div className="h-3 w-64 rounded-full shadow-[0_0_30px_rgba(245,158,11,0.8)]" style={{ backgroundColor: data.highlightColor || '#f59e0b' }}></div>
 
-              <p className="text-4xl md:text-5xl text-gray-100 font-bold leading-relaxed max-w-7xl drop-shadow-lg opacity-90">
+              <p className="text-5xl md:text-6xl text-gray-100 font-bold leading-tight max-w-7xl drop-shadow-xl opacity-90">
                 {data.description}
               </p>
 
@@ -148,9 +148,9 @@ const Slide: React.FC<Props> = ({ data }) => {
                     }}
                   >
                      <div className="absolute inset-0 bg-white/20 blur-xl"></div>
-                     <div className="relative px-16 py-8 rounded-[21px] backdrop-blur-xl bg-black/50 border border-white/30 flex flex-col items-center justify-center shadow-inner">
+                     <div className="relative px-20 py-10 rounded-[21px] backdrop-blur-xl bg-black/50 border border-white/30 flex flex-col items-center justify-center shadow-inner">
                        <span 
-                        className="text-6xl md:text-7xl font-black text-white drop-shadow-[0_0_25px_rgba(255,255,255,0.8)]"
+                        className="text-7xl md:text-8xl font-black text-white drop-shadow-[0_0_30px_rgba(255,255,255,0.8)]"
                         style={{ fontFamily: "'Roboto', sans-serif" }}
                        >
                          {data.price}

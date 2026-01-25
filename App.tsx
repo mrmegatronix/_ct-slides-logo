@@ -5,7 +5,7 @@ import { INITIAL_SLIDES } from './constants';
 import Slide from './components/Slide';
 import AdminPanel from './components/AdminPanel';
 
-const STORAGE_KEY = 'restaurant_slides_v1';
+const STORAGE_KEY = 'restaurant_slides_v2'; // Bumped version to force sync
 
 const App: React.FC = () => {
   const [slides, setSlides] = useState<SlideData[]>([]);
@@ -14,15 +14,20 @@ const App: React.FC = () => {
   const [isAdminOpen, setIsAdminOpen] = useState(false);
   const [progress, setProgress] = useState(0);
 
-  // Initialize from LocalStorage
+  // Initialize from LocalStorage with fallback and versioning
   useEffect(() => {
     const saved = localStorage.getItem(STORAGE_KEY);
     if (saved) {
       try {
         const parsed = JSON.parse(saved);
-        setSlides(parsed);
+        if (Array.isArray(parsed) && parsed.length > 0) {
+          setSlides(parsed);
+        } else {
+          throw new Error('Emply slides array');
+        }
       } catch (e) {
         setSlides(INITIAL_SLIDES);
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(INITIAL_SLIDES));
       }
     } else {
       setSlides(INITIAL_SLIDES);
@@ -31,7 +36,7 @@ const App: React.FC = () => {
   }, []);
 
   const playlist = useMemo(() => {
-    return slides;
+    return slides.length > 0 ? slides : INITIAL_SLIDES;
   }, [slides]);
 
   const currentSlide = playlist[currentIndex] || playlist[0];
