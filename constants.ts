@@ -7,9 +7,9 @@ export const INITIAL_SLIDES: SlideData[] = [
     title: '',
     description: '',
     price: '',
-    imageUrl: 'front-images/GOLD-FLAME-LOGO-BLACK.png',
+    imageUrl: '',
     backgroundImageUrl: '',
-    descriptionImageUrl: '',
+    descriptionImageUrl: 'front-images/GOLD-FLAME-LOGO-BLACK.png',
     highlightColor: '#d4af37',
     type: 'promo'
   },
@@ -31,8 +31,8 @@ export const INITIAL_SLIDES: SlideData[] = [
     title: 'Chase the Ace',
     description: 'Purchase a beverage between 3.30pm and 5.30pm and you\'re in the draw. Drawn @ 5.30pm',
     price: '5.30pm Draw!',
-    imageUrl: 'images/platter.jpg',
-    backgroundImageUrl: 'back-images/chase-ace.png',
+    imageUrl: '',
+    backgroundImageUrl: 'back-images/ace.jpg',
     descriptionImageUrl: '',
     highlightColor: '#ef4444',
     type: 'promo'
