@@ -20,7 +20,7 @@ export const INITIAL_SLIDES: SlideData[] = [
     description: 'Start your week off with a 200g Succulent Rump Steak, cooked to your liking, served with golden fries and a green garden salad.',
     price: '$20',
     imageUrl: 'images/steak-night.jpg',
-    backgroundImageUrl: 'back-images/bg1.jpg,
+    backgroundImageUrl: 'back-images/bg1.jpg',
     descriptionImageUrl: '',
     highlightColor: '#f59e0b',
     type: 'promo'
@@ -32,7 +32,7 @@ export const INITIAL_SLIDES: SlideData[] = [
     description: 'Purchase a beverage between 3.30pm and 5.30pm and you\'re in the draw. Drawn @ 5.30pm',
     price: '5.30pm Draw!',
     imageUrl: 'images/platter.jpg',
-    backgroundImageUrl: 'back-images/chase-ace.png,
+    backgroundImageUrl: 'back-images/chase-ace.png',
     descriptionImageUrl: '',
     highlightColor: '#ef4444',
     type: 'promo'
