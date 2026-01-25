@@ -102,8 +102,8 @@ const App: React.FC = () => {
         />
       </div>
 
-      {/* Persistent Controls Area - Hidden until group-hover */}
-      <div className="absolute top-8 right-8 z-50 flex items-center gap-3 p-3 rounded-2xl bg-black/60 backdrop-blur-xl border border-white/10 shadow-2xl opacity-0 translate-y-[-10px] group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300">
+      {/* Slide Navigation Controls - Left Side */}
+      <div className="absolute top-8 left-8 z-50 flex items-center gap-3 p-3 rounded-2xl bg-black/60 backdrop-blur-xl border border-white/10 shadow-2xl opacity-0 translate-y-[-10px] group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300">
         <button 
           onClick={prevSlide} 
           className="p-3 bg-white/5 hover:bg-amber-600 rounded-xl text-white transition-all active:scale-95"
@@ -133,9 +133,10 @@ const App: React.FC = () => {
         >
           <SkipForward className="w-6 h-6" />
         </button>
+      </div>
 
-        <div className="w-px h-8 bg-white/10 mx-1"></div>
-
+      {/* Admin Settings - Right Side */}
+      <div className="absolute top-8 right-8 z-50 p-3 rounded-2xl bg-black/60 backdrop-blur-xl border border-white/10 shadow-2xl opacity-0 translate-y-[-10px] group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300">
         <button 
           onClick={() => setIsAdminOpen(true)}
           className="p-3 bg-white/5 hover:bg-blue-600 rounded-xl text-white transition-all active:scale-95"
