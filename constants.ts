@@ -7,9 +7,9 @@ export const INITIAL_SLIDES: SlideData[] = [
     title: '',
     description: '',
     price: '',
-    imageUrl: 'images/Coasters Tavern Logo.png',
+    imageUrl: 'front-images/GOLD-FLAME-LOGO-BLACK.png',
     backgroundImageUrl: '',
-    descriptionImageUrl: 'front-images/GOLD-FLAME-LOGO-BLACK.png',
+    descriptionImageUrl: '',
     highlightColor: '#d4af37',
     type: 'promo'
   },

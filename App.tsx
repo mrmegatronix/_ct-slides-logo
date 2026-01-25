@@ -3,7 +3,6 @@ import { Settings, Play, Pause, SkipForward, SkipBack } from 'lucide-react';
 import { SlideData, SLIDE_DURATION_MS } from './types';
 import { INITIAL_SLIDES } from './constants';
 import Slide from './components/Slide';
-import WeatherView from './components/WeatherView';
 import AdminPanel from './components/AdminPanel';
 
 const STORAGE_KEY = 'restaurant_slides_v1';
@@ -32,14 +31,7 @@ const App: React.FC = () => {
   }, []);
 
   const playlist = useMemo(() => {
-    const weatherSlide: SlideData = {
-      id: 'weather-special',
-      type: 'weather',
-      title: 'Weather',
-      description: '',
-      imageUrl: ''
-    };
-    return [...slides, weatherSlide];
+    return slides;
   }, [slides]);
 
   const currentSlide = playlist[currentIndex] || playlist[0];
@@ -88,11 +80,7 @@ const App: React.FC = () => {
   return (
     <div className="relative w-screen h-screen bg-black overflow-hidden font-sans group">
       <div className="w-full h-full">
-        {currentSlide.type === 'weather' ? (
-          <WeatherView />
-        ) : (
-          <Slide key={currentSlide.id} data={currentSlide} />
-        )}
+        <Slide key={currentSlide.id} data={currentSlide} />
       </div>
 
       <div className="absolute bottom-0 left-0 w-full h-3 bg-black/40 z-40 backdrop-blur-sm">
