@@ -53,19 +53,14 @@ const Slide: React.FC<Props> = ({ data }) => {
         /* Professional Flame Animations */
         @keyframes flame-rise {
           0% { transform: translateY(0) scale(1); opacity: 0.8; }
-          100% { transform: translateY(-40px) scale(0.5); opacity: 0; }
+          100% { transform: translateY(-60px) scale(0.4); opacity: 0; }
         }
         @keyframes flame-wobble {
-          0%, 100% { transform: translateX(-50%) rotate(-2deg); }
-          50% { transform: translateX(-50%) rotate(2deg); }
-        }
-        @keyframes flame-morph {
-          0% { border-radius: 45% 45% 20% 20%; }
-          50% { border-radius: 30% 30% 40% 40%; }
-          100% { border-radius: 45% 45% 20% 20%; }
+          0%, 100% { transform: translateX(-50%) skewX(-2deg); }
+          50% { transform: translateX(-50%) skewX(2deg); }
         }
         .flame-container {
-          filter: blur(4px) contrast(20);
+          filter: url(#gooey);
           background: transparent;
         }
         .flame-particle {
@@ -75,14 +70,31 @@ const Slide: React.FC<Props> = ({ data }) => {
           transform: translateX(-50%);
           width: 40px;
           height: 40px;
-          background: linear-gradient(to top, rgba(255,100,0,1), rgba(255,200,0,0.8));
+          background: linear-gradient(to top, #ff6a00, #ffc400 80%);
           border-radius: 50% 50% 20% 20%;
-          animation: flame-rise 1.5s infinite ease-in;
+          animation: flame-rise 1.2s infinite ease-in;
         }
       `}</style>
 
-      {/* Content Container - Optimized for TV with 25% margins and Epic Animations */}
-      <div className="relative z-10 w-full h-full flex flex-col justify-center items-center p-[25%] mx-auto text-center space-y-12 overflow-hidden animate-epic-in">
+      {/* SVG Filter for Professional Gooey Flame - More robust for web hosts */}
+      <svg className="hidden">
+        <defs>
+          <filter id="gooey">
+            <feGaussianBlur in="SourceGraphic" stdDeviation="6" result="blur" />
+            <feColorMatrix in="blur" mode="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 18 -7" result="gooey" />
+            <feComposite in="SourceGraphic" in2="gooey" operator="atop"/>
+          </filter>
+          <filter id="flicker-distort">
+             <feTurbulence type="fractalNoise" baseFrequency="0.01" numOctaves="3" seed="1">
+               <animate attributeName="seed" from="1" to="100" dur="5s" repeatCount="indefinite" />
+             </feTurbulence>
+             <feDisplacementMap in="SourceGraphic" scale="5" />
+          </filter>
+        </defs>
+      </svg>
+
+      {/* Content Container - Optimized for TV with 5% margins and Epic Animations */}
+      <div className="relative z-10 w-full h-full flex flex-col justify-center items-center p-[5%] mx-auto text-center space-y-12 overflow-hidden animate-epic-in">
         
         {isLogoSlide ? (
           <div className="animate-pop-in flex flex-col items-center">
@@ -110,19 +122,19 @@ const Slide: React.FC<Props> = ({ data }) => {
                   <div className="absolute w-[300%] h-[300%] bg-orange-600/20 blur-[60px] rounded-full mix-blend-screen animate-pulse"></div>
 
                   {/* Core Flame Visuals */}
-                  <div className="relative w-full h-full flame-container overflow-visible">
+                  <div className="relative w-full h-full flame-container overflow-visible" style={{ filter: 'url(#gooey) url(#flicker-distort)' }}>
                     
                     {/* Multiple particles to create organic movement */}
-                    <div className="flame-particle" style={{ animationDelay: '0s', width: '45px', height: '60px' }}></div>
-                    <div className="flame-particle" style={{ animationDelay: '0.2s', width: '35px', height: '50px', left: '48%' }}></div>
-                    <div className="flame-particle" style={{ animationDelay: '0.5s', width: '40px', height: '55px', left: '52%' }}></div>
-                    <div className="flame-particle" style={{ animationDelay: '0.8s', width: '30px', height: '45px' }}></div>
-                    <div className="flame-particle" style={{ animationDelay: '1.2s', width: '25px', height: '40px', left: '49%' }}></div>
+                    <div className="flame-particle" style={{ animationDelay: '0s', width: '50px', height: '70px' }}></div>
+                    <div className="flame-particle" style={{ animationDelay: '0.3s', width: '40px', height: '60px', left: '47%' }}></div>
+                    <div className="flame-particle" style={{ animationDelay: '0.6s', width: '45px', height: '65px', left: '53%' }}></div>
+                    <div className="flame-particle" style={{ animationDelay: '0.9s', width: '35px', height: '55px' }}></div>
+                    <div className="flame-particle" style={{ animationDelay: '1.4s', width: '30px', height: '50px', left: '49%' }}></div>
 
                     {/* Blue/White Hot Core */}
                     <div 
-                      className="absolute bottom-4 left-1/2 -translate-x-1/2 w-8 h-12 bg-white/90 blur-sm rounded-full mix-blend-overlay"
-                      style={{ animation: 'flame-morph 0.5s infinite alternate' }}
+                      className="absolute bottom-4 left-1/2 -translate-x-1/2 w-10 h-14 bg-white/90 blur-sm rounded-full mix-blend-overlay"
+                      style={{ filter: 'blur(2px)' }}
                     ></div>
                   </div>
 
@@ -159,14 +171,14 @@ const Slide: React.FC<Props> = ({ data }) => {
             </div>
 
             {/* Main Text Content */}
-            <div className="flex flex-col items-center space-y-12 animate-fade-in-up w-full overflow-visible">
-              <h1 className="text-8xl md:text-[10rem] font-serif font-black leading-[1.1] text-white drop-shadow-[0_10px_30px_rgba(0,0,0,0.9)] text-glow tracking-tight whitespace-nowrap px-4">
+            <div className="flex flex-col items-center space-y-12 animate-fade-in-up w-full overflow-hidden">
+              <h1 className="text-7xl md:text-[9rem] font-serif font-black leading-[1.1] text-white drop-shadow-[0_10px_30px_rgba(0,0,0,0.9)] text-glow tracking-tight truncate w-full px-4">
                 {data.title}
               </h1>
               
               <div className="h-3 w-80 rounded-full shadow-[0_0_30px_rgba(245,158,11,0.8)]" style={{ backgroundColor: data.highlightColor || '#f59e0b' }}></div>
 
-              <p className="text-6xl md:text-7xl text-gray-100 font-bold leading-tight max-w-full drop-shadow-2xl opacity-95">
+              <p className="text-5xl md:text-6.5xl text-gray-100 font-bold leading-tight max-w-[95%] drop-shadow-2xl opacity-95">
                 {data.description}
               </p>
 
