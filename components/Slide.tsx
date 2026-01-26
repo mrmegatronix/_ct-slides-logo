@@ -66,17 +66,17 @@ const Slide: React.FC<Props> = ({ data }) => {
                {/* Ambient Back Glow */}
                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full bg-amber-500/10 blur-[100px] rounded-full"></div>
                
-               <img 
-                 src={data.imageUrl}
-                 alt="Coasters Tavern Logo" 
-                 className="relative w-full h-full object-contain drop-shadow-[0_10px_40px_rgba(0,0,0,0.5)]"
-                 onError={(e) => {
-                   // Fallback logic
-                   if (e.currentTarget.src.indexOf('Coasters%20Tavern%20Logo.png') !== -1) {
-                     e.currentTarget.src = 'images/logo.png'; 
-                   }
-                 }}
-               />
+                <img 
+                  src={data.descriptionImageUrl || data.imageUrl}
+                  alt="Coasters Tavern Logo" 
+                  className="relative w-full h-full object-contain drop-shadow-[0_10px_40px_rgba(0,0,0,0.5)]"
+                  onError={(e) => {
+                    // Fallback logic
+                    if (e.currentTarget.src.indexOf('Coasters%20Tavern%20Logo.png') !== -1) {
+                      e.currentTarget.src = 'images/logo.png'; 
+                    }
+                  }}
+                />
 
                {/* Lantern Flame Effect - Positioned relative to the container which matches the image size */}
                {/* Assuming the lantern is dead center in the image */}
