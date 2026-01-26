@@ -5,7 +5,7 @@ import { INITIAL_SLIDES } from './constants';
 import Slide from './components/Slide';
 import AdminPanel from './components/AdminPanel';
 
-const STORAGE_KEY = 'restaurant_slides_v4'; // Bumped version to force sync
+const STORAGE_KEY = 'restaurant_slides_v5'; // Bumped version to force sync
 
 const App: React.FC = () => {
   const [slides, setSlides] = useState<SlideData[]>([]);

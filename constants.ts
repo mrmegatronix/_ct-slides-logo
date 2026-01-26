@@ -32,7 +32,7 @@ export const INITIAL_SLIDES: SlideData[] = [
     description: 'Purchase a beverage between 3.30pm and 5.30pm and you\'re in the draw.',
     price: '5.30pm Draw!',
     imageUrl: '',
-    backgroundImageUrl: 'back-images/nace.jpg',
+    backgroundImageUrl: 'back-images/acer.webp',
     descriptionImageUrl: '',
     highlightColor: '#ef4444',
     type: 'promo'
@@ -79,7 +79,7 @@ export const INITIAL_SLIDES: SlideData[] = [
     title: 'Chase the Ace',
     description: 'Purchase a beverage between 3.30pm and 5.30pm and you\'re in the draw. Drawn @ 6.30pm.',
     price: '6.30pm Draw',
-    imageUrl: 'back-images/nace.jpg',
+    imageUrl: 'back-images/acer.webp',
     backgroundImageUrl: '',
     descriptionImageUrl: '',
     highlightColor: '#06b6d4',
