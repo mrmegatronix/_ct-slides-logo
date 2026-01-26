@@ -83,7 +83,7 @@
 
         // --- CONSTANTS & TYPES ---
         const SLIDE_DURATION_MS = 30000;
-        const STORAGE_KEY = 'restaurant_slides_v5';
+        const STORAGE_KEY = 'restaurant_slides_v6';
 
         const INITIAL_SLIDES = [
           {
@@ -209,6 +209,31 @@
                         .text-glow {
                           text-shadow: 0 0 30px rgba(255,255,255,0.6);
                         }
+                        /* Professional Flame Animations */
+                        @keyframes flame-rise {
+                          0% { transform: translateY(0) scale(1); opacity: 0.8; }
+                          100% { transform: translateY(-40px) scale(0.5); opacity: 0; }
+                        }
+                        @keyframes flame-morph {
+                          0% { border-radius: 45% 45% 20% 20%; }
+                          50% { border-radius: 30% 30% 40% 40%; }
+                          100% { border-radius: 45% 45% 20% 20%; }
+                        }
+                        .flame-container {
+                          filter: blur(4px) contrast(20);
+                          background: transparent;
+                        }
+                        .flame-particle {
+                          position: absolute;
+                          bottom: 0;
+                          left: 50%;
+                          transform: translateX(-50%);
+                          width: 40px;
+                          height: 40px;
+                          background: linear-gradient(to top, rgba(255,100,0,1), rgba(255,200,0,0.8));
+                          border-radius: 50% 50% 20% 20%;
+                          animation: flame-rise 1.5s infinite ease-in;
+                        }
                     `}</style>
                     <div className="absolute inset-0">
                         <img src={data.backgroundImageUrl || data.imageUrl} alt={data.title} onError={(e) => { e.currentTarget.style.display = 'none'; }} className={`w-full h-full object-cover transition-transform duration-[30000ms] ease-linear transform scale-100 ${isLogoSlide ? 'opacity-30 blur-sm' : 'opacity-100'}`} style={{ animation: 'subtleZoom 35s linear infinite alternate' }} />
@@ -222,10 +247,20 @@
                                     <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full bg-amber-500/10 blur-[100px] rounded-full"></div>
                                     <img src={data.descriptionImageUrl || data.imageUrl} alt="Coasters Tavern Logo" className="relative w-full h-full object-contain drop-shadow-[0_10px_40px_rgba(0,0,0,0.5)]" />
                                     
-                                    <div className="absolute top-[52.5%] left-[50.1%] w-[10vh] h-[14vh] pointer-events-none">
-                                        <div className="absolute top-1/2 left-1/2 w-full h-full bg-orange-600/40 blur-xl rounded-full mix-blend-screen" style={{ animation: 'flicker 0.2s infinite alternate' }}></div>
-                                        <div className="absolute top-1/2 left-1/2 w-[60%] h-[70%] bg-gradient-to-t from-orange-400 via-yellow-200 to-white/80 blur-lg rounded-full mix-blend-screen" style={{ animation: 'flicker 0.1s infinite alternate-reverse' }}></div>
-                                        <div className="absolute top-[60%] left-1/2 w-[40%] h-[40%] bg-white blur-md rounded-full mix-blend-overlay" style={{ animation: 'flicker 0.15s infinite alternate' }}></div>
+                                    <div className="absolute top-[58%] left-[50.1%] w-[12vh] h-[16vh] -translate-x-1/2 -translate-y-full pointer-events-none flex items-center justify-center">
+                                        <div className="absolute w-[300%] h-[300%] bg-orange-600/20 blur-[60px] rounded-full mix-blend-screen animate-pulse"></div>
+                                        <div className="relative w-full h-full flame-container overflow-visible">
+                                            <div className="flame-particle" style={{ animationDelay: '0s', width: '45px', height: '60px' }}></div>
+                                            <div className="flame-particle" style={{ animationDelay: '0.2s', width: '35px', height: '50px', left: '48%' }}></div>
+                                            <div className="flame-particle" style={{ animationDelay: '0.5s', width: '40px', height: '55px', left: '52%' }}></div>
+                                            <div className="flame-particle" style={{ animationDelay: '0.8s', width: '30px', height: '45px' }}></div>
+                                            <div className="flame-particle" style={{ animationDelay: '1.2s', width: '25px', height: '40px', left: '49%' }}></div>
+                                            <div className="absolute bottom-4 left-1/2 -translate-x-1/2 w-8 h-12 bg-white/90 blur-sm rounded-full mix-blend-overlay" style={{ animation: 'flame-morph 0.5s infinite alternate' }}></div>
+                                        </div>
+                                        <div className="absolute top-0 w-full h-full overflow-visible">
+                                            <div className="absolute w-1 h-1 bg-yellow-200 rounded-full animate-ping" style={{ top: '-40%', left: '40%' }}></div>
+                                            <div className="absolute w-1.5 h-1.5 bg-orange-400 rounded-full animate-pulse" style={{ top: '-70%', left: '60%', animationDelay: '1s' }}></div>
+                                        </div>
                                     </div>
                                 </div>
                                 {data.day === 'Welcome' && data.title && (

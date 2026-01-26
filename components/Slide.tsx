@@ -50,16 +50,34 @@ const Slide: React.FC<Props> = ({ data }) => {
         .animate-pop-in {
           animation: pop-in 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
         }
-        /* Flame Flicker Animation */
-        @keyframes flicker {
-          0% { opacity: 0.8; transform: translate(-50%, -50%) scale(1); filter: brightness(1); }
-          15% { opacity: 0.9; transform: translate(-50%, -50%) scale(1.05); filter: brightness(1.1); }
-          30% { opacity: 0.7; transform: translate(-50%, -50%) scale(0.95); filter: brightness(0.9); }
-          45% { opacity: 0.85; transform: translate(-50%, -50%) scale(1.02); filter: brightness(1.05); }
-          60% { opacity: 0.95; transform: translate(-50%, -50%) scale(1.08); filter: brightness(1.2); }
-          75% { opacity: 0.75; transform: translate(-50%, -50%) scale(0.98); filter: brightness(0.95); }
-          90% { opacity: 0.9; transform: translate(-50%, -50%) scale(1.03); filter: brightness(1.1); }
-          100% { opacity: 0.8; transform: translate(-50%, -50%) scale(1); filter: brightness(1); }
+        /* Professional Flame Animations */
+        @keyframes flame-rise {
+          0% { transform: translateY(0) scale(1); opacity: 0.8; }
+          100% { transform: translateY(-40px) scale(0.5); opacity: 0; }
+        }
+        @keyframes flame-wobble {
+          0%, 100% { transform: translateX(-50%) rotate(-2deg); }
+          50% { transform: translateX(-50%) rotate(2deg); }
+        }
+        @keyframes flame-morph {
+          0% { border-radius: 45% 45% 20% 20%; }
+          50% { border-radius: 30% 30% 40% 40%; }
+          100% { border-radius: 45% 45% 20% 20%; }
+        }
+        .flame-container {
+          filter: blur(4px) contrast(20);
+          background: transparent;
+        }
+        .flame-particle {
+          position: absolute;
+          bottom: 0;
+          left: 50%;
+          transform: translateX(-50%);
+          width: 40px;
+          height: 40px;
+          background: linear-gradient(to top, rgba(255,100,0,1), rgba(255,200,0,0.8));
+          border-radius: 50% 50% 20% 20%;
+          animation: flame-rise 1.5s infinite ease-in;
         }
       `}</style>
 
@@ -85,25 +103,34 @@ const Slide: React.FC<Props> = ({ data }) => {
                   }}
                 />
 
-               {/* Lantern Flame Effect - Adjusted for new JPG logo centering */}
-               <div className="absolute top-[52.5%] left-[50.1%] w-[10vh] h-[14vh] pointer-events-none">
-                  {/* Outer Glow (Orange) */}
-                  <div 
-                    className="absolute top-1/2 left-1/2 w-full h-full bg-orange-600/40 blur-xl rounded-full mix-blend-screen"
-                    style={{ animation: 'flicker 0.2s infinite alternate' }}
-                  ></div>
+               {/* Professional Lantern Flame - Adjusted for new JPG logo centering */}
+               <div className="absolute top-[58%] left-[50.1%] w-[12vh] h-[16vh] -translate-x-1/2 -translate-y-full pointer-events-none flex items-center justify-center">
                   
-                  {/* Inner Flame (Yellow/White) */}
-                  <div 
-                    className="absolute top-1/2 left-1/2 w-[60%] h-[70%] bg-gradient-to-t from-orange-400 via-yellow-200 to-white/80 blur-lg rounded-full mix-blend-screen"
-                    style={{ animation: 'flicker 0.1s infinite alternate-reverse' }}
-                  ></div>
-                  
-                   {/* Core Hotspot */}
-                  <div 
-                    className="absolute top-[60%] left-1/2 w-[40%] h-[40%] bg-white blur-md rounded-full mix-blend-overlay"
-                    style={{ animation: 'flicker 0.15s infinite alternate' }}
-                  ></div>
+                  {/* Outer Lantern Glow */}
+                  <div className="absolute w-[300%] h-[300%] bg-orange-600/20 blur-[60px] rounded-full mix-blend-screen animate-pulse"></div>
+
+                  {/* Core Flame Visuals */}
+                  <div className="relative w-full h-full flame-container overflow-visible">
+                    
+                    {/* Multiple particles to create organic movement */}
+                    <div className="flame-particle" style={{ animationDelay: '0s', width: '45px', height: '60px' }}></div>
+                    <div className="flame-particle" style={{ animationDelay: '0.2s', width: '35px', height: '50px', left: '48%' }}></div>
+                    <div className="flame-particle" style={{ animationDelay: '0.5s', width: '40px', height: '55px', left: '52%' }}></div>
+                    <div className="flame-particle" style={{ animationDelay: '0.8s', width: '30px', height: '45px' }}></div>
+                    <div className="flame-particle" style={{ animationDelay: '1.2s', width: '25px', height: '40px', left: '49%' }}></div>
+
+                    {/* Blue/White Hot Core */}
+                    <div 
+                      className="absolute bottom-4 left-1/2 -translate-x-1/2 w-8 h-12 bg-white/90 blur-sm rounded-full mix-blend-overlay"
+                      style={{ animation: 'flame-morph 0.5s infinite alternate' }}
+                    ></div>
+                  </div>
+
+                  {/* Top Ember Sparks */}
+                  <div className="absolute top-0 w-full h-full overflow-visible">
+                      <div className="absolute w-1 h-1 bg-yellow-200 rounded-full animate-ping" style={{ top: '-40%', left: '40%' }}></div>
+                      <div className="absolute w-1.5 h-1.5 bg-orange-400 rounded-full animate-pulse" style={{ top: '-70%', left: '60%', animationDelay: '1s' }}></div>
+                  </div>
                </div>
             </div>
 
