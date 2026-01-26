@@ -9,7 +9,7 @@ export const INITIAL_SLIDES: SlideData[] = [
     price: '',
     imageUrl: '',
     backgroundImageUrl: '',
-    descriptionImageUrl: 'front-images/GOLD-FLAME-LOGO-BLACK.png',
+    descriptionImageUrl: 'front-images/GOLD-FLAME-LOGO-BLACK.jpg',
     highlightColor: '#d4af37',
     type: 'promo'
   },

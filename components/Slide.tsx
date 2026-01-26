@@ -25,16 +25,23 @@ const Slide: React.FC<Props> = ({ data }) => {
       </div>
 
       <style>{`
+        @keyframes slide-in-epic {
+          0% { transform: scale(1.2); opacity: 0; filter: blur(20px); }
+          100% { transform: scale(1); opacity: 1; filter: blur(0px); }
+        }
+        .animate-epic-in {
+          animation: slide-in-epic 1.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
         @keyframes subtleZoom {
           0% { transform: scale(1); }
           100% { transform: scale(1.15); }
         }
         .text-glow {
-          text-shadow: 0 0 20px rgba(255,255,255,0.4);
+          text-shadow: 0 0 30px rgba(255,255,255,0.6);
         }
         @keyframes pulse-glow {
-          0%, 100% { box-shadow: 0 0 40px rgba(245,158,11,0.4); }
-          50% { box-shadow: 0 0 70px rgba(245,158,11,0.8); }
+          0%, 100% { box-shadow: 0 0 50px rgba(245,158,11,0.5); }
+          50% { box-shadow: 0 0 80px rgba(245,158,11,0.9); }
         }
         @keyframes pop-in {
           0% { transform: scale(0.9); opacity: 0; }
@@ -56,8 +63,8 @@ const Slide: React.FC<Props> = ({ data }) => {
         }
       `}</style>
 
-      {/* Content Container - Optimized for TV with 25% margins */}
-      <div className="relative z-10 w-full h-full flex flex-col justify-center items-center p-[25%] mx-auto text-center space-y-12 overflow-hidden">
+      {/* Content Container - Optimized for TV with 25% margins and Epic Animations */}
+      <div className="relative z-10 w-full h-full flex flex-col justify-center items-center p-[25%] mx-auto text-center space-y-12 overflow-hidden animate-epic-in">
         
         {isLogoSlide ? (
           <div className="animate-pop-in flex flex-col items-center">
@@ -78,9 +85,8 @@ const Slide: React.FC<Props> = ({ data }) => {
                   }}
                 />
 
-               {/* Lantern Flame Effect - Positioned relative to the container which matches the image size */}
-               {/* Assuming the lantern is dead center in the image */}
-               <div className="absolute top-[52%] left-[50%] w-[12vh] h-[16vh] pointer-events-none">
+               {/* Lantern Flame Effect - Adjusted for new JPG logo centering */}
+               <div className="absolute top-[52.5%] left-[50.1%] w-[10vh] h-[14vh] pointer-events-none">
                   {/* Outer Glow (Orange) */}
                   <div 
                     className="absolute top-1/2 left-1/2 w-full h-full bg-orange-600/40 blur-xl rounded-full mix-blend-screen"
@@ -126,14 +132,14 @@ const Slide: React.FC<Props> = ({ data }) => {
             </div>
 
             {/* Main Text Content */}
-            <div className="flex flex-col items-center space-y-12 animate-fade-in-up">
-              <h1 className="text-8xl md:text-9xl font-serif font-black leading-none text-white drop-shadow-[0_8px_20px_rgba(0,0,0,0.8)] text-glow tracking-wide">
+            <div className="flex flex-col items-center space-y-12 animate-fade-in-up w-full overflow-visible">
+              <h1 className="text-8xl md:text-[10rem] font-serif font-black leading-[1.1] text-white drop-shadow-[0_10px_30px_rgba(0,0,0,0.9)] text-glow tracking-tight whitespace-nowrap px-4">
                 {data.title}
               </h1>
               
-              <div className="h-3 w-64 rounded-full shadow-[0_0_30px_rgba(245,158,11,0.8)]" style={{ backgroundColor: data.highlightColor || '#f59e0b' }}></div>
+              <div className="h-3 w-80 rounded-full shadow-[0_0_30px_rgba(245,158,11,0.8)]" style={{ backgroundColor: data.highlightColor || '#f59e0b' }}></div>
 
-              <p className="text-5xl md:text-6xl text-gray-100 font-bold leading-tight max-w-7xl drop-shadow-xl opacity-90">
+              <p className="text-6xl md:text-7xl text-gray-100 font-bold leading-tight max-w-full drop-shadow-2xl opacity-95">
                 {data.description}
               </p>
 
