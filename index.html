@@ -64,16 +64,7 @@
       .text-glow { text-shadow: 0 0 20px rgba(255,255,255,0.4); }
       .box-glow { box-shadow: 0 0 30px rgba(255, 255, 255, 0.2), inset 0 0 20px rgba(255, 255, 255, 0.1); }
     </style>
-<script type="importmap">
-{
-  "imports": {
-    "react": "https://esm.sh/react@^19.2.3",
-    "react-dom/": "https://esm.sh/react-dom@^19.2.3/",
-    "react/": "https://esm.sh/react@^19.2.3/",
-    "lucide-react": "https://esm.sh/lucide-react@^0.562.0"
-  }
-}
-</script>
+
 </head>
 <body>
     <div id="root"></div>
@@ -209,41 +200,118 @@
                         .text-glow {
                           text-shadow: 0 0 30px rgba(255,255,255,0.6);
                         }
-                        /* Professional Flame Animations */
-                        @keyframes flame-rise {
-                          0% { transform: translateY(0) scale(1); opacity: 0.8; }
-                          100% { transform: translateY(-60px) scale(0.4); opacity: 0; }
+                        /* Realistic Flame Animations */
+                        @keyframes flame-dance {
+                          0%, 100% { 
+                            transform: scaleY(1) scaleX(1) translateX(0);
+                            filter: brightness(1);
+                          }
+                          25% { 
+                            transform: scaleY(1.1) scaleX(0.9) translateX(-2px);
+                            filter: brightness(1.1);
+                          }
+                          50% { 
+                            transform: scaleY(0.95) scaleX(1.05) translateX(1px);
+                            filter: brightness(0.95);
+                          }
+                          75% { 
+                            transform: scaleY(1.05) scaleX(0.95) translateX(-1px);
+                            filter: brightness(1.05);
+                          }
                         }
-                        .flame-container {
-                          filter: url(#gooey);
-                          background: transparent;
+                        @keyframes flame-flicker {
+                          0%, 100% { opacity: 1; transform: translateY(0) rotate(0deg); }
+                          10% { opacity: 0.95; transform: translateY(-1px) rotate(0.5deg); }
+                          20% { opacity: 1; transform: translateY(-2px) rotate(-0.5deg); }
+                          30% { opacity: 0.9; transform: translateY(0) rotate(0.3deg); }
+                          40% { opacity: 1; transform: translateY(-1px) rotate(-0.3deg); }
+                          50% { opacity: 0.95; transform: translateY(-3px) rotate(0deg); }
+                          60% { opacity: 1; transform: translateY(-1px) rotate(0.4deg); }
+                          70% { opacity: 0.9; transform: translateY(-2px) rotate(-0.4deg); }
+                          80% { opacity: 1; transform: translateY(0) rotate(0deg); }
+                          90% { opacity: 0.95; transform: translateY(-1px) rotate(0.2deg); }
                         }
-                        .flame-particle {
+                        @keyframes ember-float {
+                          0% { transform: translateY(0) translateX(0) scale(1); opacity: 0; }
+                          10% { opacity: 1; }
+                          50% { transform: translateY(-40px) translateX(10px) scale(0.8); opacity: 0.8; }
+                          100% { transform: translateY(-80px) translateX(-5px) scale(0.3); opacity: 0; }
+                        }
+                        @keyframes glow-pulse {
+                          0%, 100% { opacity: 0.6; transform: scale(1); }
+                          50% { opacity: 0.9; transform: scale(1.15); }
+                        }
+                        .flame-wrapper {
                           position: absolute;
                           bottom: 0;
                           left: 50%;
                           transform: translateX(-50%);
-                          width: 40px;
-                          height: 40px;
-                          background: linear-gradient(to top, #ff6a00, #ffc400 80%);
-                          border-radius: 50% 50% 20% 20%;
-                          animation: flame-rise 1.2s infinite ease-in;
+                          width: 100px;
+                          height: 120px;
+                          filter: url(#flame-blur);
+                        }
+                        .flame-layer {
+                          position: absolute;
+                          bottom: 0;
+                          left: 50%;
+                          transform: translateX(-50%);
+                          transform-origin: bottom center;
+                        }
+                        .flame-core {
+                          width: 30px;
+                          height: 60px;
+                          background: radial-gradient(ellipse at 50% 100%, 
+                            #fff 0%, 
+                            #fffbe6 10%,
+                            #ffee44 25%, 
+                            #ffaa00 45%, 
+                            #ff6600 65%, 
+                            #ff3300 80%,
+                            transparent 100%);
+                          border-radius: 50% 50% 50% 50% / 70% 70% 30% 30%;
+                          animation: flame-dance 0.5s ease-in-out infinite, flame-flicker 0.25s ease-in-out infinite;
+                        }
+                        .flame-mid {
+                          width: 45px;
+                          height: 75px;
+                          background: radial-gradient(ellipse at 50% 100%, 
+                            #ffcc00 0%, 
+                            #ff9900 35%, 
+                            #ff5500 60%, 
+                            transparent 100%);
+                          border-radius: 50% 50% 50% 50% / 65% 65% 35% 35%;
+                          animation: flame-dance 0.6s ease-in-out infinite reverse, flame-flicker 0.3s ease-in-out infinite;
+                          opacity: 0.8;
+                        }
+                        .flame-outer {
+                          width: 60px;
+                          height: 90px;
+                          background: radial-gradient(ellipse at 50% 100%, 
+                            #ff7700 0%, 
+                            #ff4400 35%, 
+                            #dd2200 60%, 
+                            transparent 100%);
+                          border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+                          animation: flame-dance 0.7s ease-in-out infinite, flame-flicker 0.35s ease-in-out infinite;
+                          opacity: 0.6;
+                        }
+                        .ember {
+                          position: absolute;
+                          width: 3px;
+                          height: 3px;
+                          background: radial-gradient(circle, #ffee00 0%, #ff8800 50%, transparent 100%);
+                          border-radius: 50%;
+                          animation: ember-float 2.5s ease-out infinite;
                         }
                     `}</style>
 
-                    {/* SVG Filter for Professional Gooey Flame - More robust for web hosts */}
+                    {/* SVG Filter for Flame Softening */}
                     <svg style={{ position: 'absolute', width: 0, height: 0 }}>
                         <defs>
-                          <filter id="gooey">
-                            <feGaussianBlur in="SourceGraphic" stdDeviation="6" result="blur" />
-                            <feColorMatrix in="blur" mode="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 18 -7" result="gooey" />
-                            <feComposite in="SourceGraphic" in2="gooey" operator="atop"/>
-                          </filter>
-                          <filter id="flicker-distort">
-                             <feTurbulence type="fractalNoise" baseFrequency="0.01" numOctaves="3" seed="1">
-                               <animate attributeName="seed" from="1" to="100" dur="5s" repeatCount="indefinite" />
-                             </feTurbulence>
-                             <feDisplacementMap in="SourceGraphic" scale="5" />
+                          <filter id="flame-blur">
+                            <feGaussianBlur in="SourceGraphic" stdDeviation="1.5" result="blur" />
+                            <feColorMatrix in="blur" mode="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 24 -9" result="glow" />
+                            <feBlend in="SourceGraphic" in2="glow" mode="screen" />
                           </filter>
                         </defs>
                     </svg>
@@ -255,25 +323,31 @@
                     </div>
                     <div className="relative z-10 w-full h-full flex flex-col justify-center items-center p-[5%] mx-auto text-center space-y-12 overflow-hidden animate-epic-in">
                         {isLogoSlide ? (
-                            <div className="flex flex-col items-center">
-                                <div className="relative group w-auto h-full max-h-[80%] flex items-center justify-center">
-                                    <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full bg-amber-500/10 blur-[100px] rounded-full"></div>
-                                    <img src={data.descriptionImageUrl || data.imageUrl} alt="Coasters Tavern Logo" className="relative w-full h-full object-contain drop-shadow-[0_10px_40px_rgba(0,0,0,0.5)]" />
+                            <div className="flex flex-col items-center justify-center w-full h-full">
+                                <div className="relative w-[70vw] h-[70vh] flex items-center justify-center">
+                                    <div className="absolute inset-0 bg-amber-500/10 blur-[100px] rounded-full"></div>
+                                    <img src={data.descriptionImageUrl || data.imageUrl} alt="Coasters Tavern Logo" className="relative max-w-full max-h-full object-contain drop-shadow-[0_10px_40px_rgba(0,0,0,0.5)]" />
                                     
-                                    <div className="absolute top-[58%] left-[50.1%] w-[12vh] h-[16vh] -translate-x-1/2 -translate-y-full pointer-events-none flex items-center justify-center">
-                                        <div className="absolute w-[300%] h-[300%] bg-orange-600/20 blur-[60px] rounded-full mix-blend-screen animate-pulse"></div>
-                                        <div className="relative w-full h-full flame-container overflow-visible" style={{ filter: 'url(#gooey) url(#flicker-distort)' }}>
-                                            <div className="flame-particle" style={{ animationDelay: '0s', width: '50px', height: '70px' }}></div>
-                                            <div className="flame-particle" style={{ animationDelay: '0.3s', width: '40px', height: '60px', left: '47%' }}></div>
-                                            <div className="flame-particle" style={{ animationDelay: '0.6s', width: '45px', height: '65px', left: '53%' }}></div>
-                                            <div className="flame-particle" style={{ animationDelay: '0.9s', width: '35px', height: '55px' }}></div>
-                                            <div className="flame-particle" style={{ animationDelay: '1.4s', width: '30px', height: '50px', left: '49%' }}></div>
-                                            <div className="absolute bottom-4 left-1/2 -translate-x-1/2 w-10 h-14 bg-white/90 blur-sm rounded-full mix-blend-overlay" style={{ filter: 'blur(2px)' }}></div>
+                                    <div className="absolute top-[58%] left-[48.5%] w-[14vh] h-[18vh] -translate-x-1/2 -translate-y-full pointer-events-none flex items-end justify-center">
+                                        {/* Ambient glow */}
+                                        <div className="absolute w-[400%] h-[400%] rounded-full mix-blend-screen" style={{ background: 'radial-gradient(circle, rgba(255,150,50,0.5) 0%, rgba(255,100,0,0.25) 30%, transparent 60%)', animation: 'glow-pulse 2s ease-in-out infinite' }}></div>
+                                        
+                                        {/* Main flame wrapper */}
+                                        <div className="flame-wrapper">
+                                            {/* Outer flame layer */}
+                                            <div className="flame-layer flame-outer" style={{ animationDelay: '0.1s' }}></div>
+                                            {/* Middle flame layer */}
+                                            <div className="flame-layer flame-mid" style={{ animationDelay: '0.05s' }}></div>
+                                            {/* Core flame - brightest */}
+                                            <div className="flame-layer flame-core"></div>
                                         </div>
-                                        <div className="absolute top-0 w-full h-full overflow-visible">
-                                            <div className="absolute w-1 h-1 bg-yellow-200 rounded-full animate-ping" style={{ top: '-40%', left: '40%' }}></div>
-                                            <div className="absolute w-1.5 h-1.5 bg-orange-400 rounded-full animate-pulse" style={{ top: '-70%', left: '60%', animationDelay: '1s' }}></div>
-                                        </div>
+                                        
+                                        {/* Floating embers */}
+                                        <div className="ember" style={{ bottom: '20%', left: '30%', animationDelay: '0s' }}></div>
+                                        <div className="ember" style={{ bottom: '25%', left: '60%', animationDelay: '0.7s' }}></div>
+                                        <div className="ember" style={{ bottom: '15%', left: '45%', animationDelay: '1.3s' }}></div>
+                                        <div className="ember" style={{ bottom: '30%', left: '55%', animationDelay: '0.4s' }}></div>
+                                        <div className="ember" style={{ bottom: '20%', left: '40%', animationDelay: '1.8s' }}></div>
                                     </div>
                                 </div>
                                 {data.day === 'Welcome' && data.title && (
@@ -284,9 +358,9 @@
                             <>
                                 <div className="animate-slide-down"><span className="px-14 py-6 rounded-full text-5xl font-black uppercase tracking-[0.2em] border-2 border-white/40 backdrop-blur-xl shadow-[0_0_40px_rgba(255,255,255,0.3)]" style={{ backgroundColor: `${data.highlightColor}40`, borderColor: data.highlightColor, color: '#fff' }}>{data.day || 'Special Event'}</span></div>
                                 <div className="flex flex-col items-center space-y-12 w-full overflow-hidden">
-                                    <h1 className="text-7xl md:text-[9rem] font-serif font-black leading-[1.1] text-white drop-shadow-[0_10px_30px_rgba(0,0,0,0.9)] text-glow tracking-tight truncate w-full px-4">{data.title}</h1>
-                                    <div className="h-3 w-80 rounded-full shadow-[0_0_30px_rgba(245,158,11,0.8)]" style={{ backgroundColor: data.highlightColor || '#f59e0b' }}></div>
-                                    <p className="text-5xl md:text-6.5xl text-gray-100 font-bold leading-tight max-w-[95%] drop-shadow-2xl opacity-95">{data.description}</p>
+                                    <h1 className="text-5xl md:text-7xl lg:text-[8rem] font-serif font-black leading-[1.1] text-white drop-shadow-[0_10px_30px_rgba(0,0,0,0.9)] text-glow tracking-tight text-center px-4">{data.title}</h1>
+                                    <div className="h-2 w-60 md:w-80 rounded-full shadow-[0_0_30px_rgba(245,158,11,0.8)]" style={{ backgroundColor: data.highlightColor || '#f59e0b' }}></div>
+                                    <p className="text-2xl md:text-4xl lg:text-5xl text-gray-100 font-bold leading-snug max-w-[90%] drop-shadow-2xl opacity-95 text-center">{data.description}</p>
                                     {data.price && (
                                         <div className="mt-12">
                                             <div className="relative group rounded-3xl p-[3px] bg-gradient-to-br from-white/80 to-amber-500/50 overflow-hidden" style={{ animation: 'pulse-glow 3s infinite', boxShadow: `0 0 60px ${data.highlightColor || '#f59e0b'}80` }}>
