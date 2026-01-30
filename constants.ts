@@ -63,7 +63,7 @@ export const INITIAL_SLIDES: SlideData[] = [
   },
   {
     id: '5',
-    day: 'Thursday &Friday',
+    day: 'Thursday & Friday',
     title: 'Happy Hours!',
     description: 'Enjoy 10% discount on selected beverages between 4.30pm & 6.30pm.',
     price: '10% Off!',
