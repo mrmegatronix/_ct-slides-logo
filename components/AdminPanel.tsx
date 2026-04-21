@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { SlideData } from '../types';
-import { Plus, Trash2, Save, X, LayoutGrid, CheckCircle2, ArrowLeft, Image as ImageIcon } from 'lucide-react';
+import { Plus, Trash2, Save, X, LayoutGrid, CheckCircle2, ArrowLeft, Image as ImageIcon, Eye, EyeOff } from 'lucide-react';
 
 interface Props {
   slides: SlideData[];
@@ -27,7 +27,8 @@ const AdminPanel: React.FC<Props> = ({ slides, onSave, onClose }) => {
       description: 'Enter description...',
       price: '$0',
       imageUrl: 'images/steak-night.jpg',
-      highlightColor: '#f59e0b'
+      highlightColor: '#f59e0b',
+      disabled: false
     };
     setLocalSlides([...localSlides, newSlide]);
     setHasUnsavedChanges(true);
@@ -95,17 +96,29 @@ const AdminPanel: React.FC<Props> = ({ slides, onSave, onClose }) => {
           {localSlides.filter(s => s.type === 'promo').map((slide, index) => (
             <div 
               key={slide.id} 
-              className="bg-slate-900/40 border border-slate-800 rounded-2xl overflow-hidden hover:border-amber-500/50 transition-all group flex flex-col"
+              className={`bg-slate-900/40 border rounded-2xl overflow-hidden hover:border-amber-500/50 transition-all group flex flex-col ${slide.disabled ? 'opacity-50 border-slate-800 grayscale-[0.5]' : 'border-slate-800'}`}
             >
               {/* Card Header */}
               <div className="p-4 bg-slate-800/50 border-b border-slate-800 flex justify-between items-center">
-                <span className="text-xs font-black uppercase tracking-widest text-slate-500">Slide #{index + 1}</span>
-                <button 
-                  onClick={() => handleDelete(slide.id)}
-                  className="p-2 text-slate-500 hover:text-red-400 hover:bg-red-400/10 rounded-lg transition-all"
-                >
-                  <Trash2 className="w-4 h-4" />
-                </button>
+                <div className="flex items-center gap-3">
+                  <span className="text-xs font-black uppercase tracking-widest text-slate-500">Slide #{index + 1}</span>
+                  {slide.disabled && <span className="text-[10px] font-bold bg-red-500/20 text-red-500 px-2 py-0.5 rounded uppercase">Disabled</span>}
+                </div>
+                <div className="flex items-center gap-2">
+                  <button 
+                    onClick={() => handleUpdateSlide(slide.id, { disabled: !slide.disabled })}
+                    className={`p-2 rounded-lg transition-all ${slide.disabled ? 'text-amber-500 bg-amber-500/10' : 'text-slate-500 hover:text-white hover:bg-slate-700'}`}
+                    title={slide.disabled ? "Enable Slide" : "Disable Slide"}
+                  >
+                    {slide.disabled ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+                  </button>
+                  <button 
+                    onClick={() => handleDelete(slide.id)}
+                    className="p-2 text-slate-500 hover:text-red-400 hover:bg-red-400/10 rounded-lg transition-all"
+                  >
+                    <Trash2 className="w-4 h-4" />
+                  </button>
+                </div>
               </div>
 
               <div className="p-6 space-y-4 flex-1">

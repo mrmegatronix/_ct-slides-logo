@@ -5,7 +5,7 @@ import { INITIAL_SLIDES } from './constants';
 import Slide from './components/Slide';
 import AdminPanel from './components/AdminPanel';
 
-const STORAGE_KEY = 'restaurant_slides_v5'; // Bumped version to force sync
+const STORAGE_KEY = 'restaurant_slides_v10'; // Unified across projects
 
 const App: React.FC = () => {
   const [slides, setSlides] = useState<SlideData[]>([]);
@@ -36,19 +36,22 @@ const App: React.FC = () => {
   }, []);
 
   const playlist = useMemo(() => {
-    return slides.length > 0 ? slides : INITIAL_SLIDES;
+    const activeSlides = slides.length > 0 ? slides : INITIAL_SLIDES;
+    return activeSlides.filter(s => !s.disabled);
   }, [slides]);
 
   const currentSlide = playlist[currentIndex] || playlist[0];
   const startTimeRef = useRef<number>(Date.now());
 
   const nextSlide = useCallback(() => {
+    if (playlist.length === 0) return;
     setCurrentIndex((prev) => (prev + 1) % playlist.length);
     setProgress(0);
     startTimeRef.current = Date.now();
   }, [playlist.length]);
 
   const prevSlide = useCallback(() => {
+    if (playlist.length === 0) return;
     setCurrentIndex((prev) => (prev - 1 + playlist.length) % playlist.length);
     setProgress(0);
     startTimeRef.current = Date.now();

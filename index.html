@@ -47,11 +47,11 @@
     <div id="root"></div>
 
     <script type="text/babel">
-        const { useState, useEffect, useCallback, useMemo } = React;
+        const { useState, useEffect, useCallback, useMemo, useRef } = React;
 
         // --- CONSTANTS & TYPES ---
         const SLIDE_DURATION_MS = 30000;
-        const STORAGE_KEY = 'restaurant_slides_v7';
+        const STORAGE_KEY = 'restaurant_slides_v10';
 
         const INITIAL_SLIDES = [
           {
@@ -64,17 +64,19 @@
             backgroundImageUrl: '',
             descriptionImageUrl: 'front-images/GOLD-FLAME-LOGO-BLACK.jpg',
             highlightColor: '#d4af37',
-            type: 'promo'
+            type: 'promo',
+            disabled: false
           },
-          { id: '1', day: 'Monday', title: 'Steak Day Monday\'s', description: 'Start your week off with a 200g Succulent Rump Steak, cooked to your liking, served with golden fries and a green garden salad.', price: '$20', imageUrl: 'images/steak-night.jpg', backgroundImageUrl: 'back-images/bg1.jpg', highlightColor: '#f59e0b', type: 'promo' },
-          { id: '2', day: 'Tuesday', title: 'Chase the Ace', description: 'Purchase a beverage between 3.30pm and 5.30pm and you\'re in the draw.', price: '5.30pm Draw!', imageUrl: '', backgroundImageUrl: '', highlightColor: '#ef4444', type: 'promo' },
-          { id: '3', day: 'Wednesday', title: 'Quiz Night', description: 'Every Wednesday Night from 7.00pm, $190 in prizes up for grabs. Bookings Essential.', price: 'FREE ENTRY', imageUrl: '', backgroundImageUrl: '', highlightColor: '#eab308', type: 'promo' },
-          { id: '4', day: 'Thursday', title: 'Burger Day Thursdays', description: 'Your choice of Chicken, Beer Battered Fish, Pork Belly or Coasters Beef Burger, all served with Golden Fries & Onion Rings.', price: '$19 each or 2 for $35!', imageUrl: 'images/burger-night.jpg', backgroundImageUrl: '', highlightColor: '#f97316', type: 'promo' },
-          { id: '5', day: 'Thursday & Friday', title: 'Happy Hours!', description: 'Enjoy 10% discount on selected beverages between 4.30pm & 6.30pm.', price: '10% Off!', imageUrl: '', backgroundImageUrl: 'back-images/drink.jpg', highlightColor: '#3b82f6', type: 'promo' },
-          { id: '6', day: 'Saturday', title: 'Chase the Ace', description: 'Purchase a beverage between 3.30pm and 5.30pm and you\'re in the draw. Drawn @ 6.30pm.', price: '6.30pm Draw', imageUrl: '', backgroundImageUrl: '', highlightColor: '#06b6d4', type: 'promo' },
-          { id: '7', day: 'Sunday', title: 'Two Course Sunday Roast', description: 'Traditional roast of the day with roasted vegetables, seasonal greens and rich gravy, with an Ice Cream Sundae to finish.', price: '$28', imageUrl: 'images/roast.jpg', backgroundImageUrl: '', highlightColor: '#84cc16', type: 'promo' },
-          { id: '9', day: 'Thursday', title: 'Free Pool Thursdays', description: 'Our Pool Table is Free all day and night on Thursdays! Grab a cue and challenge your mates.', price: 'FREE', imageUrl: 'images/burger-night.jpg', backgroundImageUrl: '', highlightColor: '#f97316', type: 'promo' },
-          { id: '10', day: 'Membership', title: 'Loyalty App', description: 'Join our loyalty program! Earn points with every purchase and redeem them for food and drinks.', price: 'Join Today', imageUrl: 'images/platter.jpg', backgroundImageUrl: '', highlightColor: '#8b5cf6', type: 'promo' }
+          { id: '1', day: 'Monday', title: 'Steak Day Monday\'s', description: 'Start your week off with a 200g Succulent Rump Steak, cooked to your liking, served with golden fries and a green garden salad.', price: '$20', imageUrl: 'images/steak-night.jpg', backgroundImageUrl: 'back-images/bg1.jpg', highlightColor: '#f59e0b', type: 'promo', disabled: false },
+          { id: '2', day: 'Tuesday', title: 'Chase the Ace', description: 'Purchase a beverage between 3pm and 5.30pm and you\'re in the draw.', price: '5.30pm Draw!', imageUrl: '', backgroundImageUrl: '', highlightColor: '#ef4444', type: 'promo', disabled: true },
+          { id: '3', day: 'Wednesday', title: 'Quiz Night', description: 'Every Wednesday Night from 7.00pm, $190 in prizes up for grabs. Bookings Essential.', price: 'FREE ENTRY', imageUrl: '', backgroundImageUrl: '', highlightColor: '#eab308', type: 'promo', disabled: false },
+          { id: '4', day: 'Thursday', title: 'Burger Day Thursdays', description: 'Your choice of Chicken, Beer Battered Fish, Pork Belly or Coasters Beef Burger, all served with Golden Fries & Onion Rings.', price: '$19 each or 2 for $35!', imageUrl: 'images/burger-night.jpg', backgroundImageUrl: '', highlightColor: '#f97316', type: 'promo', disabled: false },
+          { id: '5', day: 'Thursday & Friday', title: 'Happy Hours!', description: 'Enjoy 10% discount on selected beverages between 4.30pm & 6.30pm.', price: '10% Off!', imageUrl: '', backgroundImageUrl: 'back-images/drink.jpg', highlightColor: '#3b82f6', type: 'promo', disabled: false },
+          { id: '6', day: 'Saturday', title: 'Chase the Ace', description: 'Purchase a beverage between 3pm and 5.30pm and you\'re in the draw. Drawn @ 6.30pm.', price: '6.30pm Draw', imageUrl: '', backgroundImageUrl: '', highlightColor: '#06b6d4', type: 'promo', disabled: true },
+          { id: '7', day: 'Sunday', title: 'Two Course Sunday Roast', description: 'Traditional roast of the day with roasted vegetables, seasonal greens and rich gravy, with an Ice Cream Sundae to finish.', price: '$28', imageUrl: 'images/roast.jpg', backgroundImageUrl: '', highlightColor: '#84cc16', type: 'promo', disabled: false },
+          { id: '9', day: 'Thursday', title: 'Free Pool Thursdays', description: 'Our Pool Table is Free all day and night on Thursdays! Grab a cue and challenge your mates.', price: 'FREE', imageUrl: 'images/burger-night.jpg', backgroundImageUrl: '', highlightColor: '#f97316', type: 'promo', disabled: false },
+          { id: '10', day: 'Membership', title: 'Loyalty App', description: 'Join our loyalty program! Earn points with every purchase and redeem them for food and drinks.', price: 'Join Today', imageUrl: 'images/platter.jpg', backgroundImageUrl: '', highlightColor: '#8b5cf6', type: 'promo', disabled: false },
+          { id: '11', day: 'Note', title: 'Chase the Ace Will Resume Next Week', description: 'Thank you for participating! The draw will be back at its regular time next week.', price: 'See You Next Week!', imageUrl: '', backgroundImageUrl: '', highlightColor: '#d4af37', type: 'promo', disabled: false }
         ];
 
         // --- ICONS (Inline SVGs) ---
@@ -94,7 +96,9 @@
             X: (props) => <Icon {...props} path={<><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></>} />,
             ArrowLeft: (props) => <Icon {...props} path={<><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></>} />,
             LayoutGrid: (props) => <Icon {...props} path={<><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></>} />,
-            Image: (props) => <Icon {...props} path={<><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></>} />
+            Image: (props) => <Icon {...props} path={<><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></>} />,
+            Eye: (props) => <Icon {...props} path={<><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></>} />,
+            EyeOff: (props) => <Icon {...props} path={<><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"/><line x1="1" y1="1" x2="23" y2="23"/></>} />
         };
 
         const AdminPanel = ({ slides, onSave, onClose }) => {
@@ -107,7 +111,7 @@
             };
 
             const handleCreate = () => {
-                const newSlide = { id: Date.now().toString(), type: 'promo', day: 'Monday', title: 'New Event', description: 'Details...', price: '$0', imageUrl: 'images/steak-night.jpg', highlightColor: '#f59e0b' };
+                const newSlide = { id: Date.now().toString(), type: 'promo', day: 'Monday', title: 'New Event', description: 'Details...', price: '$0', imageUrl: 'images/steak-night.jpg', highlightColor: '#f59e0b', disabled: false };
                 setLocalSlides([...localSlides, newSlide]);
                 setHasChanges(true);
             };
@@ -135,20 +139,28 @@
                     <div className="flex-1 overflow-y-auto p-8 bg-[radial-gradient(circle_at_top,_var(--tw-gradient-stops))] from-slate-900 to-slate-950">
                         <div className="max-w-[1600px] mx-auto grid grid-cols-1 xl:grid-cols-2 2xl:grid-cols-3 gap-6 pb-20">
                             {localSlides.map((slide, idx) => (
-                                <div key={slide.id} className="bg-slate-900/50 border border-slate-800 rounded-2xl overflow-hidden flex flex-col p-6 space-y-4 hover:border-amber-500/30 transition-all">
+                                <div key={slide.id} className={`bg-slate-900/50 border rounded-2xl overflow-hidden flex flex-col p-6 space-y-4 hover:border-amber-500/30 transition-all ${slide.disabled ? 'opacity-50 grayscale-[0.5] border-slate-800' : 'border-slate-800'}`}>
                                     <div className="flex justify-between items-center mb-2">
-                                        <span className="text-[10px] font-black uppercase tracking-[0.3em] text-slate-500">Slide #{idx + 1}</span>
-                                        <button onClick={() => handleDelete(slide.id)} className="p-2 text-slate-600 hover:text-red-400 hover:bg-red-400/10 rounded-lg"><Icons.Trash2 className="w-4 h-4" /></button>
+                                        <div className="flex items-center gap-3">
+                                            <span className="text-[10px] font-black uppercase tracking-[0.3em] text-slate-500">Slide #{idx + 1}</span>
+                                            {slide.disabled && <span className="text-[10px] font-bold bg-red-500/20 text-red-500 px-2 py-0.5 rounded uppercase">Disabled</span>}
+                                        </div>
+                                        <div className="flex items-center gap-2">
+                                            <button onClick={() => handleUpdate(slide.id, { disabled: !slide.disabled })} className={`p-2 rounded-lg transition-all ${slide.disabled ? 'text-amber-500 bg-amber-500/10' : 'text-slate-500 hover:text-white hover:bg-slate-700'}`} title={slide.disabled ? "Enable Slide" : "Disable Slide"}>
+                                                {slide.disabled ? <Icons.EyeOff className="w-4 h-4" /> : <Icons.Eye className="w-4 h-4" />}
+                                            </button>
+                                            <button onClick={() => handleDelete(slide.id)} className="p-2 text-slate-600 hover:text-red-400 hover:bg-red-400/10 rounded-lg"><Icons.Trash2 className="w-4 h-4" /></button>
+                                        </div>
                                     </div>
                                     <div className="grid grid-cols-2 gap-4">
-                                        <div className="space-y-1"><label className="text-[10px] font-bold text-slate-500 uppercase">Day</label><input type="text" value={slide.day} onChange={e => handleUpdate(slide.id, { day: e.target.value })} className="w-full bg-slate-950/50 border border-slate-700 rounded-lg p-2 text-sm outline-none focus:border-amber-500" /></div>
-                                        <div className="space-y-1"><label className="text-[10px] font-bold text-slate-500 uppercase">Price</label><input type="text" value={slide.price} onChange={e => handleUpdate(slide.id, { price: e.target.value })} className="w-full bg-slate-950/50 border border-slate-700 rounded-lg p-2 text-sm outline-none focus:border-amber-500 font-bold text-amber-500" /></div>
+                                        <div className="space-y-1"><label className="text-[10px] font-bold text-slate-500 uppercase">Day</label><input type="text" value={slide.day || ''} onChange={e => handleUpdate(slide.id, { day: e.target.value })} className="w-full bg-slate-950/50 border border-slate-700 rounded-lg p-2 text-sm outline-none focus:border-amber-500" /></div>
+                                        <div className="space-y-1"><label className="text-[10px] font-bold text-slate-500 uppercase">Price</label><input type="text" value={slide.price || ''} onChange={e => handleUpdate(slide.id, { price: e.target.value })} className="w-full bg-slate-950/50 border border-slate-700 rounded-lg p-2 text-sm outline-none focus:border-amber-500 font-bold text-amber-500" /></div>
                                     </div>
-                                    <div className="space-y-1"><label className="text-[10px] font-bold text-slate-500 uppercase">Title</label><input type="text" value={slide.title} onChange={e => handleUpdate(slide.id, { title: e.target.value })} className="w-full bg-slate-950/50 border border-slate-700 rounded-lg p-2 text-sm font-bold outline-none focus:border-amber-500" /></div>
-                                    <div className="space-y-1"><label className="text-[10px] font-bold text-slate-500 uppercase">Description</label><textarea value={slide.description} onChange={e => handleUpdate(slide.id, { description: e.target.value })} rows={3} className="w-full bg-slate-950/50 border border-slate-700 rounded-lg p-2 text-sm outline-none focus:border-amber-500 resize-none" /></div>
+                                    <div className="space-y-1"><label className="text-[10px] font-bold text-slate-500 uppercase">Title</label><input type="text" value={slide.title || ''} onChange={e => handleUpdate(slide.id, { title: e.target.value })} className="w-full bg-slate-950/50 border border-slate-700 rounded-lg p-2 text-sm font-bold outline-none focus:border-amber-500" /></div>
+                                    <div className="space-y-1"><label className="text-[10px] font-bold text-slate-500 uppercase">Description</label><textarea value={slide.description || ''} onChange={e => handleUpdate(slide.id, { description: e.target.value })} rows={3} className="w-full bg-slate-950/50 border border-slate-700 rounded-lg p-2 text-sm outline-none focus:border-amber-500 resize-none" /></div>
                                     <div className="flex items-center gap-4">
-                                        <div className="flex-1 space-y-1"><label className="text-[10px] font-bold text-slate-500 uppercase">Image Path</label><input type="text" value={slide.imageUrl} onChange={e => handleUpdate(slide.id, { imageUrl: e.target.value })} className="w-full bg-slate-950/50 border border-slate-700 rounded-lg p-2 text-xs font-mono outline-none focus:border-amber-500" /></div>
-                                        <div className="shrink-0 space-y-1"><label className="text-[10px] font-bold text-slate-500 uppercase">Color</label><input type="color" value={slide.highlightColor} onChange={e => handleUpdate(slide.id, { highlightColor: e.target.value })} className="h-9 w-9 bg-transparent block cursor-pointer border border-slate-700 rounded-lg" /></div>
+                                        <div className="flex-1 space-y-1"><label className="text-[10px] font-bold text-slate-500 uppercase">Image Path</label><input type="text" value={slide.imageUrl || ''} onChange={e => handleUpdate(slide.id, { imageUrl: e.target.value })} className="w-full bg-slate-950/50 border border-slate-700 rounded-lg p-2 text-xs font-mono outline-none focus:border-amber-500" /></div>
+                                        <div className="shrink-0 space-y-1"><label className="text-[10px] font-bold text-slate-500 uppercase">Color</label><input type="color" value={slide.highlightColor || '#f59e0b'} onChange={e => handleUpdate(slide.id, { highlightColor: e.target.value })} className="h-9 w-9 bg-transparent block cursor-pointer border border-slate-700 rounded-lg" /></div>
                                     </div>
                                     <div className="space-y-1"><label className="text-[10px] font-bold text-slate-500 uppercase">Background Image</label><input type="text" value={slide.backgroundImageUrl || ''} onChange={e => handleUpdate(slide.id, { backgroundImageUrl: e.target.value })} placeholder="e.g., back-images/custom-bg.jpg" className="w-full bg-slate-950/50 border border-slate-700 rounded-lg p-2 text-xs font-mono outline-none focus:border-amber-500" /></div>
                                     <div className="space-y-1"><label className="text-[10px] font-bold text-slate-500 uppercase">Description Image</label><input type="text" value={slide.descriptionImageUrl || ''} onChange={e => handleUpdate(slide.id, { descriptionImageUrl: e.target.value })} placeholder="e.g., front-images/promo-image.jpg" className="w-full bg-slate-950/50 border border-slate-700 rounded-lg p-2 text-xs font-mono outline-none focus:border-amber-500" /></div>
@@ -177,10 +189,7 @@
                         .text-glow {
                           text-shadow: 0 0 30px rgba(255,255,255,0.6);
                         }
-
                     `}</style>
-
-
 
                     <div className="absolute inset-0">
                         {!isLogoSlide && (
@@ -196,7 +205,6 @@
                             <div className="flex flex-col items-center justify-center w-full h-full">
                                 <div className="relative w-[70vw] h-[70vh] flex items-center justify-center">
                                     <img src={data.descriptionImageUrl || data.imageUrl} alt="Coasters Tavern Logo" className="relative max-w-full max-h-full object-contain drop-shadow-[0_10px_40px_rgba(0,0,0,0.5)]" />
-                                    
                                 </div>
                                 {data.day === 'Welcome' && data.title && (
                                     <h1 className="mt-12 text-7xl font-serif font-black text-white text-glow" style={{ textWrap: 'balance' }}>{data.title}</h1>
@@ -204,23 +212,19 @@
                             </div>
                         ) : (
                             <>
-                                {/* Day Tag - 25% from top */}
                                 <div className="absolute top-[25%] left-1/2 -translate-x-1/2 -translate-y-1/2 z-20 w-full animate-slide-down">
                                     <span className="px-8 py-3 rounded-full text-3xl md:text-5xl font-black uppercase tracking-[0.2em] border-2 border-white/40 backdrop-blur-xl shadow-[0_0_40px_rgba(255,255,255,0.3)]" style={{ backgroundColor: `${data.highlightColor}40`, borderColor: data.highlightColor, color: '#fff' }}>{data.day || 'Special Event'}</span>
                                 </div>
 
-                                {/* Title - 40% from top */}
                                 <div className="absolute top-[40%] left-1/2 -translate-x-1/2 -translate-y-1/2 z-20 w-full px-4">
                                     <h1 className="text-4xl md:text-6xl lg:text-[6rem] font-serif font-black leading-[1] text-white drop-shadow-[0_10px_30px_rgba(0,0,0,0.9)] text-glow tracking-tight text-center" style={{ textWrap: 'balance' }}>{data.title}</h1>
                                     <div className="h-2 w-32 md:w-60 rounded-full shadow-[0_0_30px_rgba(245,158,11,0.8)] mx-auto mt-4" style={{ backgroundColor: data.highlightColor || '#f59e0b' }}></div>
                                 </div>
 
-                                {/* Description - 50% from top (Top edge anchor) */}
                                 <div className="absolute top-[50%] left-1/2 -translate-x-1/2 z-20 w-[90%] md:w-[80%]">
                                     <p className="text-xl md:text-3xl lg:text-5xl text-gray-100 font-bold leading-snug drop-shadow-2xl opacity-95 text-center" style={{ textWrap: 'balance' }}>{data.description}</p>
                                 </div>
 
-                                {/* Price Button - 80% from top */}
                                 {data.price && (
                                     <div className="absolute top-[80%] left-1/2 -translate-x-1/2 -translate-y-1/2 z-20 w-full flex justify-center px-4">
                                         <div className="relative group max-w-[90vw] rounded-xl md:rounded-2xl p-[2px] bg-gradient-to-br from-white/80 to-amber-500/50 overflow-visible mx-auto" style={{ animation: 'pulse-glow 3s infinite', boxShadow: `0 0 30px ${data.highlightColor || '#f59e0b'}60` }}>
@@ -244,6 +248,7 @@
             const [isPlaying, setIsPlaying] = useState(true);
             const [isAdminOpen, setIsAdminOpen] = useState(false);
             const [progress, setProgress] = useState(0);
+            const startTimeRef = useRef(Date.now());
 
             useEffect(() => {
                 const saved = localStorage.getItem(STORAGE_KEY);
@@ -259,18 +264,39 @@
                 }
             }, []);
 
-            const playlist = useMemo(() => slides.length > 0 ? slides : INITIAL_SLIDES, [slides]);
+            const playlist = useMemo(() => {
+                const activeSlides = slides.length > 0 ? slides : INITIAL_SLIDES;
+                return activeSlides.filter(s => !s.disabled);
+            }, [slides]);
+
             const currentSlide = playlist[currentIndex] || playlist[0];
 
-            const nextSlide = useCallback(() => { setCurrentIndex(prev => (prev + 1) % playlist.length); setProgress(0); }, [playlist.length]);
+            const nextSlide = useCallback(() => { 
+                if (playlist.length === 0) return;
+                setCurrentIndex(prev => (prev + 1) % playlist.length); 
+                setProgress(0); 
+                startTimeRef.current = Date.now();
+            }, [playlist.length]);
+
+            const prevSlide = useCallback(() => { 
+                if (playlist.length === 0) return;
+                setCurrentIndex(prev => (prev - 1 + playlist.length) % playlist.length); 
+                setProgress(0); 
+                startTimeRef.current = Date.now();
+            }, [playlist.length]);
 
             useEffect(() => {
                 if (!isPlaying || isAdminOpen) return;
                 const interval = setInterval(() => {
-                    setProgress(prev => {
-                        if (prev >= 100) { nextSlide(); return 0; }
-                        return prev + (100 / (SLIDE_DURATION_MS / 100));
-                    });
+                    const now = Date.now();
+                    const elapsed = now - startTimeRef.current;
+                    const newProgress = (elapsed / SLIDE_DURATION_MS) * 100;
+
+                    if (newProgress >= 100) {
+                        nextSlide();
+                    } else {
+                        setProgress(newProgress);
+                    }
                 }, 100);
                 return () => clearInterval(interval);
             }, [isPlaying, isAdminOpen, nextSlide]);
@@ -284,17 +310,26 @@
                         <div className="h-full bg-gradient-to-r from-amber-600 to-yellow-400 transition-all duration-100 ease-linear" style={{ width: `${progress}%` }}></div>
                     </div>
                     <div className="absolute top-8 left-8 z-50 opacity-0 group-hover:opacity-100 transition-opacity flex gap-4">
-                        <button onClick={() => { setCurrentIndex(prev => (prev - 1 + playlist.length) % playlist.length); setProgress(0); }} className="p-4 bg-white/10 hover:bg-amber-600 rounded-full" title="Previous Slide"><Icons.SkipBack className="w-6 h-6" /></button>
-                        <button onClick={() => setIsPlaying(!isPlaying)} className="p-4 bg-white/10 hover:bg-amber-600 rounded-full" title={isPlaying ? 'Pause' : 'Resume'}>{isPlaying ? <Icons.Pause className="w-6 h-6" /> : <Icons.Play className="w-6 h-6" />}</button>
-                        <button onClick={() => { setCurrentIndex(prev => (prev + 1) % playlist.length); setProgress(0); }} className="p-4 bg-white/10 hover:bg-amber-600 rounded-full" title="Next Slide"><Icons.SkipForward className="w-6 h-6" /></button>
+                        <button onClick={prevSlide} className="p-4 bg-white/10 hover:bg-amber-600 rounded-full" title="Previous Slide"><Icons.SkipBack className="w-6 h-6" /></button>
+                        <button onClick={() => {
+                            const nextIsPlaying = !isPlaying;
+                            setIsPlaying(nextIsPlaying);
+                            if (nextIsPlaying) {
+                                startTimeRef.current = Date.now() - (progress / 100) * SLIDE_DURATION_MS;
+                            }
+                        }} className="p-4 bg-white/10 hover:bg-amber-600 rounded-full" title={isPlaying ? 'Pause' : 'Resume'}>{isPlaying ? <Icons.Pause className="w-6 h-6" /> : <Icons.Play className="w-6 h-6" />}</button>
+                        <button onClick={nextSlide} className="p-4 bg-white/10 hover:bg-amber-600 rounded-full" title="Next Slide"><Icons.SkipForward className="w-6 h-6" /></button>
                     </div>
                     <div className="absolute top-8 right-8 z-50 opacity-0 group-hover:opacity-100 transition-opacity flex gap-4">
                         <button onClick={() => setIsAdminOpen(true)} className="p-4 bg-white/10 hover:bg-blue-600 rounded-full" title="Admin Slide Editor"><Icons.Settings className="w-6 h-6" /></button>
                     </div>
-                    {isAdminOpen && <AdminPanel slides={slides} onSave={(s) => { setSlides(s); localStorage.setItem(STORAGE_KEY, JSON.stringify(s)); }} onClose={() => setIsAdminOpen(false)} />}
+                    {isAdminOpen && <AdminPanel slides={slides} onSave={(s) => { setSlides(s); localStorage.setItem(STORAGE_KEY, JSON.stringify(s)); setProgress(0); startTimeRef.current = Date.now(); }} onClose={() => setIsAdminOpen(false)} />}
                 </div>
             );
         };
+
+        ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+    </script>
 
         ReactDOM.createRoot(document.getElementById('root')).render(<App />);
     </script>

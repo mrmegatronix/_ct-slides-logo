@@ -9,6 +9,7 @@ export interface SlideData {
   type: 'promo' | 'image-only';
   backgroundImageUrl?: string; // Custom background image from back-images folder
   descriptionImageUrl?: string; // Image to show in description box from front-images folder
+  disabled?: boolean;
 }
 
 export const SLIDE_DURATION_MS = 30000; // 30 seconds

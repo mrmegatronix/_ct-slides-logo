@@ -11,7 +11,8 @@ export const INITIAL_SLIDES: SlideData[] = [
     backgroundImageUrl: '',
     descriptionImageUrl: 'front-images/GOLD-FLAME-LOGO-BLACK.jpg',
     highlightColor: '#d4af37',
-    type: 'promo'
+    type: 'promo',
+    disabled: false
   },
   {
     id: '1',
@@ -23,19 +24,21 @@ export const INITIAL_SLIDES: SlideData[] = [
     backgroundImageUrl: 'back-images/bg1.jpg',
     descriptionImageUrl: '',
     highlightColor: '#f59e0b',
-    type: 'promo'
+    type: 'promo',
+    disabled: false
   },
   {
     id: '2',
     day: 'Tuesday',
     title: 'Chase the Ace',
-    description: 'Purchase a beverage between 3.30pm and 5.30pm and you\'re in the draw.',
+    description: 'Purchase a beverage between 3pm and 5.30pm and you\'re in the draw.',
     price: '5.30pm Draw!',
     imageUrl: '',
     backgroundImageUrl: '',
     descriptionImageUrl: '',
     highlightColor: '#ef4444',
-    type: 'promo'
+    type: 'promo',
+    disabled: true
   },
   {
     id: '3',
@@ -47,7 +50,8 @@ export const INITIAL_SLIDES: SlideData[] = [
     backgroundImageUrl: '',
     descriptionImageUrl: '',
     highlightColor: '#eab308',
-    type: 'promo'
+    type: 'promo',
+    disabled: false
   },
   {
     id: '4',
@@ -59,7 +63,8 @@ export const INITIAL_SLIDES: SlideData[] = [
     backgroundImageUrl: '',
     descriptionImageUrl: '',
     highlightColor: '#f97316',
-    type: 'promo'
+    type: 'promo',
+    disabled: false
   },
   {
     id: '5',
@@ -71,19 +76,21 @@ export const INITIAL_SLIDES: SlideData[] = [
     backgroundImageUrl: 'back-images/drink.jpg',
     descriptionImageUrl: '',
     highlightColor: '#3b82f6',
-    type: 'promo'
+    type: 'promo',
+    disabled: false
   },
   {
     id: '6',
     day: 'Saturday',
     title: 'Chase the Ace',
-    description: 'Purchase a beverage between 3.30pm and 5.30pm and you\'re in the draw. Drawn @ 6.30pm.',
+    description: 'Purchase a beverage between 3pm and 6.30pm and you\'re in the draw. Drawn @ 6.30pm.',
     price: '6.30pm Draw',
     imageUrl: '',
     backgroundImageUrl: '',
     descriptionImageUrl: '',
     highlightColor: '#06b6d4',
-    type: 'promo'
+    type: 'promo',
+    disabled: true
   },
   {
     id: '7',
@@ -95,7 +102,8 @@ export const INITIAL_SLIDES: SlideData[] = [
     backgroundImageUrl: '',
     descriptionImageUrl: '',
     highlightColor: '#84cc16',
-    type: 'promo'
+    type: 'promo',
+    disabled: false
   },
   {
     id: '9',
@@ -107,7 +115,8 @@ export const INITIAL_SLIDES: SlideData[] = [
     backgroundImageUrl: '',
     descriptionImageUrl: '',
     highlightColor: '#f97316',
-    type: 'promo'
+    type: 'promo',
+    disabled: false
   },
   {
     id: '10',
@@ -119,6 +128,20 @@ export const INITIAL_SLIDES: SlideData[] = [
     backgroundImageUrl: '',
     descriptionImageUrl: '',
     highlightColor: '#8b5cf6',
-    type: 'promo'
+    type: 'promo',
+    disabled: false
+  },
+  {
+    id: '11',
+    day: 'Note',
+    title: 'Chase the Ace Will Resume Next Week',
+    description: 'Thank you for participating! The draw will be back at its regular time next week.',
+    price: 'See You Next Week!',
+    imageUrl: '',
+    backgroundImageUrl: '',
+    descriptionImageUrl: '',
+    highlightColor: '#d4af37',
+    type: 'promo',
+    disabled: false
   }
 ];
