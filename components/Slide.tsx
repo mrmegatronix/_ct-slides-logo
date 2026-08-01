@@ -182,8 +182,36 @@ const Slide: React.FC<Props> = ({ data }) => {
                 {data.description}
               </p>
 
-              {/* Price Box */}
-              {data.price && (
+              {/* Loyalty App Dual QR Codes or Standard Price Box */}
+              {data.title?.toLowerCase().includes('loyalty') ? (
+                <div className="mt-8 flex items-center justify-center gap-12 animate-pop-in">
+                  {/* Apple App Store QR */}
+                  <div className="flex flex-col items-center gap-3 p-6 rounded-3xl bg-black/60 backdrop-blur-xl border-2 border-white/30 shadow-2xl">
+                    <span className="text-2xl font-bold text-gray-300 uppercase tracking-wider">iOS / Apple</span>
+                    <div className="bg-white p-3 rounded-2xl shadow-lg">
+                      <img 
+                        src="https://api.qrserver.com/v1/create-qr-code/?size=250x250&margin=8&data=https%3A%2F%2Fapps.apple.com%2Fus%2Fapp%2Fcoasters-tavern%2Fid1592410581" 
+                        alt="Apple App Store QR" 
+                        className="w-40 h-40 object-contain"
+                      />
+                    </div>
+                    <span className="text-xl font-black text-white bg-black/80 px-6 py-2 rounded-xl border border-white/20">App Store</span>
+                  </div>
+
+                  {/* Google Play QR */}
+                  <div className="flex flex-col items-center gap-3 p-6 rounded-3xl bg-black/60 backdrop-blur-xl border-2 border-emerald-500/50 shadow-2xl">
+                    <span className="text-2xl font-bold text-gray-300 uppercase tracking-wider">Android</span>
+                    <div className="bg-white p-3 rounded-2xl shadow-lg">
+                      <img 
+                        src="https://api.qrserver.com/v1/create-qr-code/?size=250x250&margin=8&data=https%3A%2F%2Fplay.google.com%2Fstore%2Fapps%2Fdetails%3Fid%3Dcom.posbiz.coasters%26hl%3Den" 
+                        alt="Google Play QR" 
+                        className="w-40 h-40 object-contain"
+                      />
+                    </div>
+                    <span className="text-xl font-black text-white bg-emerald-950/80 px-6 py-2 rounded-xl border border-emerald-400/30">Google Play</span>
+                  </div>
+                </div>
+              ) : data.price && (
                 <div className="mt-12 animate-pop-in">
                   <div 
                     className="relative group rounded-3xl p-[3px] bg-gradient-to-br from-white/80 to-amber-500/50 overflow-hidden"
